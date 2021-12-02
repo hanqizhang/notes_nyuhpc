@@ -21,10 +21,10 @@ For an example sbatch file, please see my run-jupyter.sbatch in this repo.
 
 Your slurm-<job id>.out will output something like the following:
 <code>
-[I 22:10:48.082 NotebookApp] Serving notebooks from local directory: /home/hz2253/tools/batch  
-[I 22:10:48.083 NotebookApp] Jupyter Notebook 6.4.6 is running at:  
-[I 22:10:48.083 NotebookApp] http://localhost:8766/  
-[I 22:10:48.083 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+  [I 22:10:48.082 NotebookApp] Serving notebooks from local directory: /home/hz2253/tools/batch
+  [I 22:10:48.083 NotebookApp] Jupyter Notebook 6.4.6 is running at:
+  [I 22:10:48.083 NotebookApp] http://localhost:8766/  
+  [I 22:10:48.083 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
 </code>
 
 Note that I don't have to input jupyter notebook token here. It is also okay to use a token, but I feel it's worth it to set up a password like [so](https://jupyter-notebook.readthedocs.io/en/stable/public_server.html).
