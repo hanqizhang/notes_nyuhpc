@@ -5,7 +5,7 @@ Notes and useful references for setting up the NYU Greene HPC
 For the most part, you can follow Greene's official guide: 
 https://sites.google.com/nyu.edu/nyu-hpc/hpc-systems/greene/software/singularity-with-miniconda
 I had some issues with the pytorch version as suggested in this line:
-  pip3 install torch==1.10.0+cu113 torchvision==0.11.1+cu113 torchaudio==0.10.0+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+<code>pip3 install torch==1.10.0+cu113 torchvision==0.11.1+cu113 torchaudio==0.10.0+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html</code>
 Finding and downloading the right version of torch and cuda will resolve the issue.
 
 ## notes for forwarding jupyter notebook in the context of singularity container
