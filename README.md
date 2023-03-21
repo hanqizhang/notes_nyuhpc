@@ -4,11 +4,10 @@ Notes and useful references for setting up the NYU Greene HPC
 ## singularity and miniconda
 The first thing to do to get started on Greene is to set up a [singularity](https://en.wikipedia.org/wiki/Singularity_(software)) container. Then you are free to install stuff in your conda environment. For guide on setting up singularity and conda, follow NYU HPC's official guide:  
 https://sites.google.com/nyu.edu/nyu-hpc/hpc-systems/greene/software/singularity-with-miniconda  
-I had some issues with the pytorch version as suggested in this line:
-```
-pip3 install torch==1.10.0+cu113 torchvision==0.11.1+cu113 torchaudio==0.10.0+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
-```
-Finding and downloading the right version of torch and cuda will resolve the issue.
+
+Two potential points of confusion:
+1. When creating ext3/env.sh, you can do this while in the singualrity container, no need to exit.
+2. When installing torch, make sure to install the version corresponding to the singularity image you use. Follow instructions on the [pytorch website](https://pytorch.org) and to be consistent with the instructions on the Greene HPC guide, choose pip as your package manager.
 
 ## notes for running jupyter notebook on greene with ssh port forwarding, in the context of singularity container
 For the most part, we can follow the tutorial in this link:  
