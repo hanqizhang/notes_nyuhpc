@@ -27,3 +27,21 @@ Your slurm-<job id>.out will output something like the following:
 ```
 
 Note that I don't have to input jupyter notebook token here. It is also okay to use a token, but I feel it's worth it to set up a password like [so](https://jupyter-notebook.readthedocs.io/en/stable/public_server.html).
+
+
+# notes_nyushanghai hpc
+Notes for setting up NYU Shanghai HPC
+
+NYU Shanghai HPCs do not use singularity at the moment, so we can simply set up our virtual environment or conda environment once we log in.
+
+## notes for running jupyter notebook on nyu shanghai hpc with ssh port forwarding
+Port forwarding works almost the same on the nyu shanghai hpc as on greene, but there seems to some difference of ip addresses, at least when I use port forwarding for jupyter. So here's the ssh command for port forwarding:
+```
+ssh -L 8778:<ip found in the jupyter job output>:8777 <netid>@hpclogin.shanghai.nyu.edu
+```
+The -L option instructs ssh to forward a the remote port(8777) that jupyer notebook is running at to a port(8778) on your local machine. Then in your browser, simply type in https://<ip found in the jupyter job output>/8778
+
+When you ran your jupyter job, you should have used a corresponding slurm sbtach file like the one I share in this repo, which specifies that jupyter should be connected to port 8777.
+
+## gpu jobs on nyu shanghai hpc
+An example sbatch file is shared in the repo.
