@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#!/bin/bash
-
 #SBATCH --job-name=gpu-jupyter
 #SBATCH -N 1
 #SBATCH -c 2
