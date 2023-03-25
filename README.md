@@ -36,23 +36,43 @@ Notes for setting up NYU Shanghai HPC
 
 NYU Shanghai HPCs do not use singularity at the moment, so we can simply set up our virtual environment or conda environment once we log in.
 
-## notes for running jupyter notebook on nyu shanghai hpc with ssh port forwarding
-Port forwarding works almost the same on the nyu shanghai hpc as on greene, but there seems to some difference of ip addresses, at least when I use port forwarding for jupyter. So here's the ssh command for port forwarding:
+You can use the anaconda module provided in the system or install your own miniconda under ```/scratch/<net-id>/```
 ```
-ssh -L 8778:\<ip found in the jupyter job output\>:8777 \<net-id\>@hpclogin.shanghai.nyu.edu
+cd /scratch/<net-id>/
+wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh -b -p miniconda3
 ```
-The -L option instructs ssh to forward a the remote port(8777) that jupyer notebook is running at to a port(8778) on your local machine. Then in your browser, simply type in https://\<ip found in the jupyter job output\>/8778
+If you don't need the installation file any longer:
+```
+rm Miniconda3-latest-Linux-x86_64.sh
+```
+Create conda environment:
+```
+conda create -n voyager python=3.9
+```
+(if later for some reason you want to remove this environment: ```conda env remove -n voyager```)
 
-When you ran your jupyter job, you should have used a corresponding slurm sbtach file like the one I share in this repo, which specifies that jupyter should be connected to port 8777.
-
-Your slurm-\<job id\>.out will output something like the following that has the "\<ip found in the jupyter job output\>" that I was referring to (here it is `compute129`). 
+Next, create a wrapper script /scratch/<net-id>/env.sh
+The wrapper script will activate your conda environment, to which you will be installing your packages and dependencies. The script should contain the following:
 ```
-[I 16:30:40.515 NotebookApp] Serving notebooks from local directory: /gpfsnyu/home/<net-id>/...
-[I 16:30:40.515 NotebookApp] Jupyter Notebook 6.4.10 is running at:
-[I 16:30:40.516 NotebookApp] http://compute129:8777/?token=...
-[I 16:30:40.516 NotebookApp]  or http://127.0.0.1:8777/?token=...
-[I 16:30:40.516 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+#!/bin/bash
+source /scratch/<net-id>/miniconda3/etc/profile.d/conda.sh
+export PATH=/scratch/<net-id>/miniconda3/bin:$PATH
+export PYTHONPATH=/scratch/<net-id>/miniconda3/bin:$PATH
 ```
+Activate your conda environment with the following:
+```
+source /scratch/<net-id>/env.sh
+conda activate voyager
+```
+Install packages:
+```
+conda install pip -y
+conda install ipykernel -y
+conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia # refer to pytorch website
+conda install jupyter jupyterhub pandas matplotlib scipy scikit-learn scikit-image Pillow
+```
+Now you can submit a GPU job if you are eligible to access GPU nodes on the pudong cluster. If not, CPUs on the cluster are always available. Just delete the line ```#SBATCH --gres=gpu:1``` in the sbatch file.
 
 ## gpu jobs on nyu shanghai hpc
 An example sbatch file is shared in the repo.
