@@ -1,5 +1,7 @@
+Notes, references, and example files for setting up the NYU Greene HPC and NYU Shanghai HPC
+
 # notes_nyugreene
-Notes and useful references for setting up the NYU Greene HPC
+Notes for setting up the NYU Greene HPC
 
 ## singularity and miniconda
 The first thing to do to get started on Greene is to set up a [singularity](https://en.wikipedia.org/wiki/Singularity_(software)) container. Then you are free to install stuff in your conda environment. For guide on setting up singularity and conda, follow NYU HPC's official guide:  
