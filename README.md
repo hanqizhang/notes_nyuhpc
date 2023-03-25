@@ -48,11 +48,11 @@ rm Miniconda3-latest-Linux-x86_64.sh
 ```
 Create conda environment:
 ```
-conda create -n voyager python=3.9
+conda create -n environmentname python=3.9
 ```
-(if later for some reason you want to remove this environment: ```conda env remove -n voyager```)
+(if later for some reason you want to remove this environment: ```conda env remove -n environmentname```)
 
-Next, create a wrapper script /scratch/<net-id>/env.sh
+Next, create a wrapper script /scratch/\<net-id\>/env.sh
 The wrapper script will activate your conda environment, to which you will be installing your packages and dependencies. The script should contain the following:
 ```
 #!/bin/bash
@@ -63,7 +63,7 @@ export PYTHONPATH=/scratch/<net-id>/miniconda3/bin:$PATH
 Activate your conda environment with the following:
 ```
 source /scratch/<net-id>/env.sh
-conda activate voyager
+conda activate environmentname
 ```
 Install packages:
 ```
