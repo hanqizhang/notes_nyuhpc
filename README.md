@@ -18,9 +18,9 @@ Greene, so we have to run Jupyter in a Singularity container.
 
 For an example sbatch file, please see my run-jupyter.sbatch in this repo.
 
-Your slurm-<job id>.out will output something like the following:  
+Your slurm-\<job id\>.out will output something like the following:  
 ```
-[I 22:10:48.082 NotebookApp] Serving notebooks from local directory: /home/<net-id>/tools/batch  
+[I 22:10:48.082 NotebookApp] Serving notebooks from local directory: /home/<net-id>/... 
 [I 22:10:48.083 NotebookApp] Jupyter Notebook 6.4.6 is running at:  
 [I 22:10:48.083 NotebookApp] http://localhost:8766/  
 [I 22:10:48.083 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).  
@@ -37,11 +37,20 @@ NYU Shanghai HPCs do not use singularity at the moment, so we can simply set up 
 ## notes for running jupyter notebook on nyu shanghai hpc with ssh port forwarding
 Port forwarding works almost the same on the nyu shanghai hpc as on greene, but there seems to some difference of ip addresses, at least when I use port forwarding for jupyter. So here's the ssh command for port forwarding:
 ```
-ssh -L 8778:<ip found in the jupyter job output>:8777 <netid>@hpclogin.shanghai.nyu.edu
+ssh -L 8778:\<ip found in the jupyter job output\>:8777 \<net-id\>@hpclogin.shanghai.nyu.edu
 ```
-The -L option instructs ssh to forward a the remote port(8777) that jupyer notebook is running at to a port(8778) on your local machine. Then in your browser, simply type in https://<ip found in the jupyter job output>/8778
+The -L option instructs ssh to forward a the remote port(8777) that jupyer notebook is running at to a port(8778) on your local machine. Then in your browser, simply type in https://\<ip found in the jupyter job output\>/8778
 
 When you ran your jupyter job, you should have used a corresponding slurm sbtach file like the one I share in this repo, which specifies that jupyter should be connected to port 8777.
+
+Your slurm-\<job id\>.out will output something like the following that has the "\<ip found in the jupyter job output\>" that I was referring to (here it is `compute129`). 
+```
+[I 16:30:40.515 NotebookApp] Serving notebooks from local directory: /gpfsnyu/home/<net-id>/...
+[I 16:30:40.515 NotebookApp] Jupyter Notebook 6.4.10 is running at:
+[I 16:30:40.516 NotebookApp] http://compute129:8777/?token=...
+[I 16:30:40.516 NotebookApp]  or http://127.0.0.1:8777/?token=...
+[I 16:30:40.516 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+```
 
 ## gpu jobs on nyu shanghai hpc
 An example sbatch file is shared in the repo.
