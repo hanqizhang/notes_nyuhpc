@@ -18,6 +18,5 @@ echo "SLURM_ARRAY_JOB_ID: " $SLURM_ARRAY_JOB_ID
 echo "SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
 
 source /scratch/<net-id>/env.sh # if you use your custom installed miniconda
-conda init
 conda activate /scratch/<net-id>/<environmentname>
 jupyter notebook --no-browser --ip=0.0.0.0 --port 8777 --notebook-dir=$(pwd)
