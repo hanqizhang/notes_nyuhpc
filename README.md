@@ -48,6 +48,7 @@ conda create --prefix /scratch/<net-id>/environmentname python=3.9
 ```
 Activate your conda environment with the following:
 ```
+conda init bash
 conda activate /scratch/<net-id>/environmentname
 ```
 Install packages:
@@ -76,14 +77,14 @@ conda create --prefix /scratch/<net-id>/environmentname python=3.9
 (if later for some reason you want to remove this environment: ```conda env remove -n environmentname```)
 
 Next, create a wrapper script /scratch/\<net-id\>/env.sh
-The wrapper script will activate your conda environment, to which you will be installing your packages and dependencies. The script should contain the following:
+The wrapper script will activate your conda environment, to which you will be installing your packages and dependencies. (see [advantages of using a wrapper script](https://ncgas.org/training/installing-conda-packages.html) than ```conda init```.) The script should contain the following:
 ```
 #!/bin/bash
 source /scratch/<net-id>/miniconda3/etc/profile.d/conda.sh
 export PATH=/scratch/<net-id>/miniconda3/bin:$PATH
 export PYTHONPATH=/scratch/<net-id>/miniconda3/bin:$PATH
 ```
-Activate your conda environment with the following:
+Activate your conda environment with the following: 
 ```
 source /scratch/<net-id>/env.sh
 conda activate environmentname
