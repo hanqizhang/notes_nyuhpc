@@ -37,6 +37,29 @@ Notes for setting up NYU Shanghai HPC
 NYU Shanghai HPCs do not use singularity at the moment, so we can simply set up our virtual environment or conda environment once we log in.
 
 You can use the anaconda module provided in the system or install your own miniconda under ```/scratch/<net-id>/```
+
+## using the anaconda module by default (recommended)
+```
+module load anaconda
+```
+Create conda environment, preferably directly under the scratch folder:
+```
+conda create --prefix /scratch/<net-id>/environmentname python=3.9
+```
+Activate your conda environment with the following:
+```
+conda activate /scratch/<net-id>/environmentname
+```
+Install packages:
+```
+conda install pip -y
+conda install ipykernel -y
+conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia # refer to pytorch website
+conda install jupyter jupyterhub pandas matplotlib scipy scikit-learn scikit-image Pillow
+...
+```
+
+## installing and using your own miniconda
 ```
 cd /scratch/<net-id>/
 wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -46,9 +69,9 @@ If you don't need the installation file any longer:
 ```
 rm Miniconda3-latest-Linux-x86_64.sh
 ```
-Create conda environment:
+Create conda environment, preferably directly under the scratch folder:
 ```
-conda create -n environmentname python=3.9
+conda create --prefix /scratch/<net-id>/environmentname python=3.9
 ```
 (if later for some reason you want to remove this environment: ```conda env remove -n environmentname```)
 
@@ -71,8 +94,15 @@ conda install pip -y
 conda install ipykernel -y
 conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia # refer to pytorch website
 conda install jupyter jupyterhub pandas matplotlib scipy scikit-learn scikit-image Pillow
+...
 ```
-Now you can submit a GPU job if you are eligible to access GPU nodes on the pudong cluster. If not, CPUs on the cluster are always available. Just delete the line ```#SBATCH --gres=gpu:1``` in the sbatch file.
+Now you can submit a GPU job if you are eligible to access GPU nodes on the pudong cluster. If not, CPUs on the cluster are always available. Just delete the lines ```#SBATCH --gres=gpu:1``` and ```#SBATCH -p gpu``` in the sbatch file.
 
 ## gpu jobs on nyu shanghai hpc
-An example sbatch file is shared in the repo.
+Currently only the ```pudong``` cluster has GPU nodes. So make sure to specify the cluster ```#SBATCH -M pudong``` if you are running a GPU job. For CPU jobs either leave the cluster unspecified or choose pudong or nyushc as preferred.
+
+An example sbatch file is shared in the repo. Note that when using a GPU node, ```module: command not found``` error might come up. In that case define the module command using what is provided in the example sbatch file.
+
+use ```squeue -u <net-id>``` to check jobs that are currently running for the user. An inconvenience is that jobs on a cluster are only visible through that cluster's log-in node: ```<net-id>@hpclogin.shanghai.nyu.edu``` for nyushc and ```<net-id>@hpc.shanghai.nyu.edu``` for pudong.
+
+(Disclaimer: notes here are not official. Please refer to the official guides if available. Ask IT Services for help if these notes fail in your situation.)
