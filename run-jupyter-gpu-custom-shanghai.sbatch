@@ -9,9 +9,9 @@
 #SBATCH --mem-per-cpu=20GB
 #SBATCH --gres=gpu:1
 #SBATCH --mail-type=ALL # select which email types will be sent
-#SBATCH --mail-user=NETID@nyu.edu # NOTE: put your netid here if you want emails
+#SBATCH --mail-user=<net-id>@nyu.edu # NOTE: put your netid here if you want emails
 
-sleep $(( (RANDOM%10) + 1 )) 
+sleep $(( (RANDOM%10) + 1 )) # as suggested by watchernyu, to avoid issues when submitting large amounts of jobs
 
 echo "SLURM_JOBID: " $SLURM_JOBID
 echo "SLURM_ARRAY_JOB_ID: " $SLURM_ARRAY_JOB_ID
