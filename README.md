@@ -30,6 +30,7 @@ Your slurm-\<job id\>.out will output something like the following:
 
 Note that I don't have to input jupyter notebook token here. It is also okay to use a token, but I feel it's worth it to set up a password like [so](https://jupyter-notebook.readthedocs.io/en/stable/public_server.html).
 
+---
 
 # notes_nyushanghai hpc
 Notes for setting up NYU Shanghai HPC
@@ -105,5 +106,24 @@ Currently only the ```pudong``` cluster has GPU nodes. So make sure to specify t
 An example sbatch file is shared in the repo. Note that when using a GPU node, ```module: command not found``` error might come up. In that case define the module command using what is provided in the example sbatch file.
 
 use ```squeue -u <net-id>``` to check jobs that are currently running for the user. An inconvenience is that jobs on a cluster are only visible through that cluster's log-in node: ```<net-id>@hpclogin.shanghai.nyu.edu``` for nyushc and ```<net-id>@hpc.shanghai.nyu.edu``` for pudong.
+
+---
+
+## notes for running jupyter notebook on nyu shanghai hpc with ssh port forwarding
+
+First, submit job specifying to run jupyter notebook and what ip address and port to use for port forwarding on the remote server. (see example sbatch file in this repo)
+
+Second, find out the ```remoteip``` assigned to you by the cluster. You can run ```squeue -u <net-id>``` on the cluster and find it listed under 'NODELIST', for example, it could be ```compute 118``` or ```gpu6```.
+
+Third, open up another terminal window on your local computer and ssh into the cluster with the command:
+```
+sshpass -f ~/<your_password_file>.pwd ssh -L <localport>:<remoteip>:<remoteport> <net-id>@<login_node>.shanghai.nyu.edu
+```
+
+Decide yourself what local port to use. It could be 8888 or any number around that value, as long as it is not already occupied on your local machine.
+
+Then simply open your browser locally and type in the address: ```http://localhost:<localport>```. Then you can use jupyter notebook in the same way as you'd use it locally.
+
+---
 
 (Disclaimer: notes here are not official. Please refer to the official guides if available. Ask IT Services for help if these notes fail in your situation.)
